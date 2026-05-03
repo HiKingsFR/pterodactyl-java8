@@ -1,4 +1,4 @@
-name: Build Docker Image
+name: build docker image
 
 on:
   push:
@@ -28,4 +28,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:java_8
+            ghcr.io/hikingsfr/pterodactyl-java8:java_8
