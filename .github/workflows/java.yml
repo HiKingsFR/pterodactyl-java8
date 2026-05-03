@@ -1,4 +1,4 @@
-name: build docker image
+name: build java
 
 on:
   push:
@@ -12,6 +12,11 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        tag:
+          - 8
     steps:
       - uses: actions/checkout@v6
       - uses: docker/setup-qemu-action@v4
@@ -23,9 +28,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v7
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./java
+          file: ./java/${{ matrix.tag }}/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/hikingsfr/pterodactyl-java8:java_8
+            ghcr.io/hikingsfr/yolks:java_${{ matrix.tag }}
